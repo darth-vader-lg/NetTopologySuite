@@ -242,6 +242,7 @@ namespace NetTopologySuite.Operation.OverlayNG
         /// </summary>
         /// <param name="value">A numeric value</param>
         /// <returns>The number of decimal places in the value</returns>
+#if !SAFE_CODE
         private static unsafe int NumberOfDecimals(double value)
         {
             // NaN, infinities, and many values closer to 0 than to 1 can fail this test.
@@ -283,6 +284,9 @@ namespace NetTopologySuite.Operation.OverlayNG
             // decimal point).
             return NumberOfDecimalsSlow(value);
         }
+#else
+        private static int NumberOfDecimals(double value) => NumberOfDecimalsSlow(value);
+#endif
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static int NumberOfDecimalsSlow(double value)
